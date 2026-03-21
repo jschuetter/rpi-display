@@ -7,6 +7,7 @@ There are two options for installing dependencies:
 2) Follow below instructions: 
 		- Use `pip install` or `pip3 install` to install all dependencies in `requirements.txt`
 		- Follow the rgbmatrix package installation instructions at https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python, using rgbmatrix-src as the root directory
+*For 'externally managed environment' error, try installing packages manually using `sudo apt install python3-[package name]`*
 
 #### Setup notes: 
 * The rgbmatrix library requires root privileges to run smoothly (in order to access low-level hardware for initialization - see https://github.com/hzeller/rpi-rgb-led-matrix/tree/master for more information). This results in a couple of things: 
