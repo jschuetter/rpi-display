@@ -1,14 +1,19 @@
 # rpiDisplay
 An RGB matrix OS/driver for Raspberry Pi -- work in progress
 
-## Setup requirements
+## Setup
+Clone the git repository from https://github.com/jschuetter/rpi-display
+Run `git submodule update --init --recursive` to update submodules
+
+### Dependencies
 There are two options for installing dependencies: 
 1) Run setup.sh (assumes Python 3 is already installed!) in the project root dir, or 
 2) Follow below instructions: 
 		- Use `pip install` or `pip3 install` to install all dependencies in `requirements.txt`
 		- Follow the rgbmatrix package installation instructions at https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python, using rgbmatrix-src as the root directory
+*For 'externally managed environment' error, try installing packages manually using `sudo apt install python3-[package name]`*
 
-#### Setup notes: 
+### Setup notes: 
 * The rgbmatrix library requires root privileges to run smoothly (in order to access low-level hardware for initialization - see https://github.com/hzeller/rpi-rgb-led-matrix/tree/master for more information). This results in a couple of things: 
 	- All scripts must be run as root user (i.e. using `sudo python3` or `sudo python`)
 	- All packages must also be installed with sudo as well
