@@ -163,3 +163,4 @@ display-master/modules/exports/
 keebTest.py
 display-master/modules/testmodule.py
 .vscode/
+test-files/
