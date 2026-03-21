@@ -2,8 +2,19 @@
 An RGB matrix OS/driver for Raspberry Pi -- work in progress
 
 ## Setup
-Clone the git repository from https://github.com/jschuetter/rpi-display
-Run `git submodule update --init --recursive` to update submodules
+1) Clone the git repository from https://github.com/jschuetter/rpi-display
+2) Run `git submodule update --init --recursive` to update submodules
+3) Run `setup.sh` (assumes python3 is already installed) in the root directory
+	- Creates a Python venv called `.venv` in the project root
+	- Installs project dependencies
+	- Creates an alias `sudopy` for calling python scripts with venv as root
+
+*If the alias does not work, try appending the following snippet to your `~/.bashrc`:*
+```
+if [ -f ~/.bash_aliases ]; then
+. ~/.bash_aliases
+fi
+```
 
 ### Dependencies
 There are two options for installing dependencies: 
