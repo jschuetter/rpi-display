@@ -2,9 +2,10 @@
 An RGB matrix OS/driver for Raspberry Pi -- work in progress
 
 ## Setup
-1) Clone the git repository from https://github.com/jschuetter/rpi-display
-2) Run `git submodule update --init --recursive` to update submodules
-3) Run `setup.sh` (assumes python3 is already installed) in the root directory
+1) Follow the instructions at [Minimal Raspbian Distribution](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master?tab=readme-ov-file#use-minimal-raspbian-distribution) and [Blacklist Sound](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master?tab=readme-ov-file#bad-interaction-with-sound) to disable onboard sound on your Pi
+2) Clone the git repository from https://github.com/jschuetter/rpi-display
+3) Run `git submodule update --init --recursive` to update submodules
+4) Run `setup.sh` (assumes python3 is already installed) in the root directory
 	- Creates a Python venv called `.venv` in the project root
 	- Installs project dependencies
 	- Creates an alias `sudopy` for calling python scripts with venv as root
