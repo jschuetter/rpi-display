@@ -9,6 +9,7 @@ An RGB matrix OS/driver for Raspberry Pi -- work in progress
 	- Creates a Python venv called `.venv` in the project root
 	- Installs project dependencies
 	- Creates an alias `sudopy` for calling python scripts with venv as root
+5) Copy `default_dotenv.txt` and rename it `.env`, updating it to match your system's specs.
 
 *If the alias does not work, try appending the following snippet to your `~/.bashrc`:*
 ```
