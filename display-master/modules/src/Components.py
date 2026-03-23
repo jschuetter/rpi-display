@@ -783,12 +783,14 @@ class DateTimeDisplay(Text):
         self.format = dtFormat
         self.tz = timezone
 
-
-    def loop(self, canvas: FrameCanvas): 
+    def update(self): 
         # Update text
         now = dt.now(tz=self.tz)
         self.text = now.strftime(self.format)
         self.adjustAlignment()
+
+    def loop(self, canvas: FrameCanvas): 
+        self.update()
         self.draw(canvas)
 
 class TickerText(ScrollingText):

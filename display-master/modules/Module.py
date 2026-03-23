@@ -40,7 +40,8 @@ class Module:
 
     def update(self): 
         '''Optional method for updating module data (e.g. fetching from API)'''
-        return
+        for c in self.components: 
+            c.update()
     
     def loop(self): 
         '''Code to run on every subsequent frame update'''

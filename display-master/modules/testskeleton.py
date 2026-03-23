@@ -11,7 +11,7 @@ v1.0: 22 May 2025
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from config import FONTS_PATH
 # import Components
-from Components import *
+from src.Components import *
 from modules.Module import Module
 
 # Logging
