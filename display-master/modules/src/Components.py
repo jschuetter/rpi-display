@@ -789,10 +789,6 @@ class DateTimeDisplay(Text):
         self.text = now.strftime(self.format)
         self.adjustAlignment()
 
-    def loop(self, canvas: FrameCanvas): 
-        self.update()
-        self.draw(canvas)
-
 class TickerText(ScrollingText):
     '''A scrolling text box that displays multiple messages'''
 
