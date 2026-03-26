@@ -958,6 +958,8 @@ class Anim(Component):
     
     def draw(self, canvas: FrameCanvas):
         canvas.SetImage(self.frames[self.frame_idx], self.x, self.y)
+        
+    def update(self):
         # Increment frame index
         self.frame_idx += 1
         if self.frame_idx >= len(self.frames): 
