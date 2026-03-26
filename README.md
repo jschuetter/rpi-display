@@ -1,7 +1,24 @@
 # rpiDisplay
 An RGB matrix OS/driver for Raspberry Pi -- work in progress
 
-## Setup requirements
+## Setup
+1) Follow the instructions at [Minimal Raspbian Distribution](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master?tab=readme-ov-file#use-minimal-raspbian-distribution) and [Blacklist Sound](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master?tab=readme-ov-file#bad-interaction-with-sound) to disable onboard sound on your Pi
+2) Clone the git repository from https://github.com/jschuetter/rpi-display
+3) Run `git submodule update --init --recursive` to update submodules
+4) Run `setup.sh` (assumes python3 is already installed) in the root directory
+	- Creates a Python venv called `.venv` in the project root
+	- Installs project dependencies
+	- Creates an alias `sudopy` for calling python scripts with venv as root
+5) Copy `default_dotenv.txt` and rename it `.env`, updating it to match your system's specs.
+
+*If the alias does not work, try appending the following snippet to your `~/.bashrc`:*
+```
+if [ -f ~/.bash_aliases ]; then
+. ~/.bash_aliases
+fi
+```
+
+### Dependencies
 There are two options for installing dependencies: 
 1) Run setup.sh (assumes Python 3 is already installed!) in the project root dir, or 
 2) Follow below instructions: 
@@ -9,7 +26,7 @@ There are two options for installing dependencies:
 		- Follow the rgbmatrix package installation instructions at https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python, using rgbmatrix-src as the root directory
 *For 'externally managed environment' error, try installing packages manually using `sudo apt install python3-[package name]`*
 
-#### Setup notes: 
+### Setup notes: 
 * The rgbmatrix library requires root privileges to run smoothly (in order to access low-level hardware for initialization - see https://github.com/hzeller/rpi-rgb-led-matrix/tree/master for more information). This results in a couple of things: 
 	- All scripts must be run as root user (i.e. using `sudo python3` or `sudo python`)
 	- All packages must also be installed with sudo as well

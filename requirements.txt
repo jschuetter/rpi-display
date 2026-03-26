@@ -3,3 +3,5 @@ pillow
 webcolors
 typeguard
 av
+pytz
+numpy

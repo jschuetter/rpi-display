@@ -13,6 +13,7 @@ v2.0: 12 Feb 2025
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from modules.Module import Module
+from src.Components import DateTimeDisplay
 from datetime import datetime as dt
 import time, pytz
 from config import FONTS_PATH
@@ -35,34 +36,30 @@ MILITARY_TIME = True
 TZ_EST = pytz.timezone("US/Eastern")
 
 # Fonts
-TIME_FONT_PATH = FONTS_PATH+"basic/7x13B.bdf"
-DATE_FONT_PATH = FONTS_PATH+"basic/5x7.bdf"
-FONT_COLOR = [255,255,255]
-# Load fonts
-timeFont = graphics.Font()
-timeFont.LoadFont(TIME_FONT_PATH)
-dateFont = graphics.Font()
-dateFont.LoadFont(DATE_FONT_PATH)
-fontColor = graphics.Color(*FONT_COLOR)
+TIME_FONT_PATH = "basic/7x13B.bdf"
+DATE_FONT_PATH = "basic/5x7.bdf"
+FONT_COLOR = (255,255,255)
 
 # Define BasicClock as class
 class BasicClock(Module): 
 
     def __init__(self, matrix, canvas):
         super().__init__(matrix, canvas, doLoop=True, delay=1)
-
-    # Continuously run on loop
-    def draw(self):
-        # Update clock
-        self.canvas.Clear()
-        now = dt.now(tz=TZ_EST)
-        # Draw date text, then time
-        graphics.DrawText(self.canvas, dateFont, DATE_X, DATE_Y, fontColor, 
-                now.strftime(DATE_FORMAT))
-        if MILITARY_TIME:
-            graphics.DrawText(self.canvas, timeFont, TIME_X, TIME_Y, fontColor, 
-                now.strftime(TIME_FORMAT_24))
-        else:
-            graphics.DrawText(self.canvas, timeFont, TIME_X-1, TIME_Y, fontColor, 
-                now.strftime(TIME_FORMAT_12))
-        self.canvas = self.matrix.SwapOnVSync(self.canvas)
+        self.components = [
+            # Date display
+            DateTimeDisplay(
+                DATE_X, DATE_Y,
+                font=DATE_FONT_PATH,
+                color=FONT_COLOR,
+                rightAlign=False,
+                dtFormat=DATE_FORMAT 
+            ),
+            # Time display
+            DateTimeDisplay(
+                TIME_X, TIME_Y,
+                font=TIME_FONT_PATH,
+                color=FONT_COLOR,
+                rightAlign=False,
+                dtFormat=TIME_FORMAT_24 if MILITARY_TIME else TIME_FORMAT_12
+            )
+        ]

@@ -118,7 +118,7 @@ class PrimitiveComponent(Component):
     @typechecked
     def __init__(self, x_: int, y_: int, w: int, h: int, 
                 *, 
-                fill: [tuple, None] = (255,255,255), 
+                fill: Union[tuple, None] = (255,255,255), 
                 stroke: Optional[tuple] = None, 
                 weight: int = 1,
                 angle: int = 0):
@@ -212,7 +212,7 @@ class Rect(PrimitiveComponent):
 
     def getStrokePts(self): 
         # If stroke_color is False, return empty
-        if not self.stroke_color: 
+        if not self.stroke_color or self.stroke_weight <= 0: 
             self.stroke_pts = ()
             return
 
@@ -783,12 +783,14 @@ class DateTimeDisplay(Text):
         self.format = dtFormat
         self.tz = timezone
 
-
-    def loop(self, canvas: FrameCanvas): 
+    def update(self): 
         # Update text
         now = dt.now(tz=self.tz)
         self.text = now.strftime(self.format)
         self.adjustAlignment()
+
+    def loop(self, canvas: FrameCanvas): 
+        self.update()
         self.draw(canvas)
 
 class TickerText(ScrollingText):
