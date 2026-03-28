@@ -10,6 +10,7 @@ An RGB matrix OS/driver for Raspberry Pi -- work in progress
 	- Installs project dependencies
 	- Creates an alias `sudopy` for calling python scripts with venv as root
 5) Copy `default_dotenv.txt` and rename it `.env`, updating it to match your system's specs.
+6) *(Optional)* set the default sound device by updating `/etc/asound.conf` according to the [Alsa Wiki](https://www.alsa-project.org/wiki/Setting_the_default_device).
 
 *If the alias does not work, try appending the following snippet to your `~/.bashrc`:*
 ```
@@ -34,11 +35,15 @@ There are two options for installing dependencies:
 * N.B. if you need to uninstall the rgbmatrix pkg for any reason (outside a virtual environment), using pip uninstall will not work. The install files can be found under `/usr/local/lib/pythonX.X/dist-packages/` (X.X is usually 2.7 or 3.7). Run `sudo rm -rf rgbmatrix*` to remove the package.
 * If Python cannot find the dotenv module, uninstall it using `pip3 uninstall` and `pip uninstall`, then re-run the setup script or reinstall the dependency manually
 
-Font sources: 
+#### Font sources: 
 - bitmap-fonts: github.com/Tecate/bitmap-fonts
 - ibm: github.com/farsil/ibmfonts
 - spleen: github.com/fcambus/spleen
 - basic: github.com/hzeller/rpi-rgb-matrix
+
+#### Troubleshooting
+Short sound files being truncated
+- USB speakers may need a second to "wake up" when playing sound. I was able to get mine to work well by playing a 100ms tone, waiting a few ms (100 for just_playback, 130 for pygame), then playing your desired sound file.
 
 ## Modules
 ### BasicClock
