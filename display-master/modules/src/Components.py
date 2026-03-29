@@ -496,7 +496,7 @@ class ScrollingText(Text):
         speed: float = -1,
         mode: int = ONCE,
         delay: int = 0, 
-        spacing: int = 0
+        sep: str = ''
         ):
         '''
         Parameters
@@ -523,8 +523,8 @@ class ScrollingText(Text):
             No. of frame updates to wait between scrolling iterations
             ONCE & LOOP modes: scrolls around once, then pauses at original position
             BOUNCE mode: pauses at each end of text before changing direction
-        spacing: int
-            No. of px space between iterations in LOOP mode
+        sep: str
+            String to insert between iterations in LOOP mode
             Has no effect in ONCE or BOUNCE modes
         ----------------
         Other Attributes
@@ -543,11 +543,14 @@ class ScrollingText(Text):
             raise ValueError("Scrolling mode must be ScrollingText.ONCE, ScrollingText.LOOP, or ScrollingText.BOUNCE")
         self.mode = mode
         self.delay = delay
-        self.spacing = spacing
+        self.separator = sep
         self.scroll_index = 0
         self.delay_count = 0
         self.direction_mult = 1
+
         self.length = None # Populated on initial draw
+        if mode == self.LOOP: 
+            self.text += self.separator
 
     def draw(self, canvas: FrameCanvas): 
         # Ignore rest of function if initial draw or scroll rate is 0
@@ -590,8 +593,8 @@ class ScrollingText(Text):
         elif self.mode == self.LOOP:
             # Test whether *second string* has returned to original position
             if (
-                (self.rate < 0 and newPos + (self.length + self.spacing) < 0)
-                or (self.rate > 0 and newPos - (self.length + self.spacing)  > 0)
+                (self.rate < 0 and newPos + self.length < 0)
+                or (self.rate > 0 and newPos - self.length  > 0)
             ):
                 # Reset scroll index
                 # Add self.direction_mult to cancel out increment at end of function call
@@ -621,7 +624,7 @@ class ScrollingText(Text):
         if self.mode == self.LOOP: 
             graphics.DrawText(
                 canvas, self.font, 
-                newPos - (self.length + self.spacing) * np.sign(self.rate), # Multiply by sign of rate to ensure proper placement
+                newPos - self.length * np.sign(self.rate), # Multiply by sign of rate to ensure proper placement
                 self.y, self.font_color, self.text
                 )
 
@@ -794,7 +797,7 @@ class TickerText(ScrollingText):
         font: str = "basic/4x6.bdf",
         color: tuple = (255, 255, 255),
         speed: float = -1,
-        spacing: int = 0, 
+        sep: str = '',
         wrap: bool = True
         ):
         '''
@@ -814,9 +817,8 @@ class TickerText(ScrollingText):
         speed: float
             Rate of scrolling (px/frame update)
             Defaults to -1 (text moves 1 px left per frame)
-        spacing: int
-            No. of px space between iterations in LOOP mode
-            Has no effect in ONCE or BOUNCE modes
+        sep: str
+            String to insert between messages
         ----------------
         Other Attributes
         ----------------
@@ -835,27 +837,29 @@ class TickerText(ScrollingText):
             Indices are added to or removed from this list at every frame update as
             they enter or leave the display
         '''
-        for m in messages_: 
+        for idx in range(len(messages_)): 
+            m = messages_[idx]
             if not isinstance(m, str): 
                 raise ValueError("Messages must be strings!")
+            messages_[idx] = m + sep
+
 
         super().__init__(x_, y_, messages_[0], font=font, color=color,
-            speed=speed, spacing=spacing)
+            speed=speed, sep=sep)
         self.wrap = wrap
         self.messages = messages_
         self.msg_index = 0
         self.msg_x = [0] * len(messages_)
         self.msg_len = [0] * len(messages_)
-        # self.update_msg_idx = [0]
         self.first_idx = 0
         self.last_idx = 0
-
+        
     def draw(self, canvas: FrameCanvas): 
         # Ignore rest of function if initial draw or scroll rate is 0
         if self.msg_len[0] == 0 or self.rate == 0: 
             self.msg_len[0] = super().draw(canvas)
             self.msg_x[0] += self.rate
-            self.msg_x[1] = self.msg_x[0] + self.msg_len[0] + self.spacing
+            self.msg_x[1] = self.msg_x[0] + self.msg_len[0]
             # self.update_msg_idx = [0, 1]
             return self.msg_len[0]
         
@@ -863,22 +867,16 @@ class TickerText(ScrollingText):
         if (
             (
                 self.rate < 0 
-                and self.msg_x[self.last_idx] + self.msg_len[self.last_idx] < canvas.width - self.spacing
+                and self.msg_x[self.last_idx] + self.msg_len[self.last_idx] < canvas.width
             ) or (
-                self.rate > 0 and self.msg_x[self.last_idx] > self.spacing
+                self.rate > 0 and self.msg_x[self.last_idx] > 0
             )
         ): 
             # If next message needs to be printed, print first, then add to focus list
             nextMsg = self.last_idx + 1
             if nextMsg >= len(self.messages): 
                 nextMsg = 0
-            self.msg_x[nextMsg] = self.msg_x[self.last_idx] + self.msg_len[self.last_idx] + self.spacing
-            # self.msg_len[nextMsg] = graphics.DrawText(
-            #     canvas, self.font, 
-            #     self.msg_x[nextMsg], 
-            #     self.y, self.font_color, self.messages[nextMsg]
-            # )
-            # self.msg_x[nextMsg] += self.rate
+            self.msg_x[nextMsg] = self.msg_x[self.last_idx] + self.msg_len[self.last_idx]
             self.last_idx = nextMsg
 
         # Test whether first msg is still in frame
