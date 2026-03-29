@@ -57,8 +57,8 @@ class Component:
     def draw(self, canvas: FrameCanvas):
         pass
 
-    def loop(self, canvas: FrameCanvas):
-        self.draw(canvas)
+    def update(self):
+        pass
 
     def duplicate(self):
         return deepcopy(self)
@@ -365,8 +365,6 @@ class RightTriangle(PrimitiveComponent):
         strokePts += np.array([self.x, self.y])
         self.stroke_pts = self.rotate(strokePts, self.rotation)
 
-
-
 class Line(PrimitiveComponent): 
     '''Draws a line.'''
 
@@ -549,17 +547,14 @@ class ScrollingText(Text):
         self.scroll_index = 0
         self.delay_count = 0
         self.direction_mult = 1
+        self.length = None # Populated on initial draw
 
     def draw(self, canvas: FrameCanvas): 
-        self.length = super().draw(canvas)
-        self.scroll_index += 1
-        return self.length
-
-    def loop(self, canvas: FrameCanvas): 
-        # Ignore rest of function if scroll rate is 0
-        if self.rate == 0: 
-            self.draw(canvas)
-            return
+        # Ignore rest of function if initial draw or scroll rate is 0
+        if self.length is None or self.rate == 0: 
+            self.length = super().draw(canvas)
+            self.scroll_index += 1
+            return self.length
         
         newPos = self.x + self.rate * self.scroll_index
 
@@ -856,17 +851,13 @@ class TickerText(ScrollingText):
         self.last_idx = 0
 
     def draw(self, canvas: FrameCanvas): 
-        self.msg_len[0] = super().draw(canvas)
-        self.msg_x[0] += self.rate
-        self.msg_x[1] = self.msg_x[0] + self.msg_len[0] + self.spacing
-        # self.update_msg_idx = [0, 1]
-        return self.msg_len[0]
-
-    def loop(self, canvas: FrameCanvas): 
-        # Ignore rest of function if scroll rate is 0
-        if self.rate == 0: 
-            self.draw(canvas)
-            return
+        # Ignore rest of function if initial draw or scroll rate is 0
+        if self.msg_len[0] == 0 or self.rate == 0: 
+            self.msg_len[0] = super().draw(canvas)
+            self.msg_x[0] += self.rate
+            self.msg_x[1] = self.msg_x[0] + self.msg_len[0] + self.spacing
+            # self.update_msg_idx = [0, 1]
+            return self.msg_len[0]
         
         # Test whether next message needs to be displayed
         if (
