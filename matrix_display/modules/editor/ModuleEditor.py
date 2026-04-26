@@ -1,14 +1,14 @@
 # RGB Matrix dependencies
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-import matrix_display.config 
-from matrix_display.config import FONTS_PATH
+from ... import config 
+from ...config import FONTS_PATH
 
 # CLI dependencies
 import cmd
-from matrix_display import Elements
-from matrix_display.modules.editor.ElementEditor import ElementEditor
-import matrix_display.modules.editor.cli
-from matrix_display.modules.editor.cli import parse
+from ... import Elements
+from .ElementEditor import ElementEditor
+from . import cli
+from .cli import parse
 
 import os, re, json
 import logging
