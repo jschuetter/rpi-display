@@ -17,14 +17,14 @@ v1.1: 14 Jun 2025
 
 # RGB Matrix dependencies
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from matrix_display.config import FONTS_PATH
+from ...config import FONTS_PATH
 
 # CLI dependencies
 import cmd
-from matrix_display.modules.Module import Module
-import matrix_display.Elements
-from matrix_display.modules.editor.ElementEditor import ElementEditor
-from matrix_display.modules.editor.ModuleEditor import ModuleEditor
+from ..Module import Module
+from ... import Elements
+from .ElementEditor import ElementEditor
+from .ModuleEditor import ModuleEditor
 
 import os, re, json
 import logging

@@ -6,7 +6,7 @@ Similar to Element classes, but stripped-down for final implementation
 '''
 
 # Import config module
-from matrix_display.config import FONTS_PATH
+from .config import FONTS_PATH
 
 import logging
 log = logging.getLogger(__name__)
@@ -20,9 +20,9 @@ from typing import Union, Optional
 
 from rgbmatrix import FrameCanvas, graphics
 
-from matrix_display.Property import Property
-from matrix_display.Param import Parameter
-from matrix_display.elementhelpers import *
+from .Property import Property
+from .Param import Parameter
+from .elementhelpers import *
 
 # Element dependencies
 # Primitive elements 
