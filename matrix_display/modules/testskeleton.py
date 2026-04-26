@@ -9,10 +9,10 @@ v1.0: 22 May 2025
 '''
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from config import FONTS_PATH
+from matrix_display.config import FONTS_PATH
 # import Components
-from src.Components import *
-from modules.Module import Module
+from matrix_display.Components import *
+from matrix_display.modules.Module import Module
 
 # Logging
 import logging

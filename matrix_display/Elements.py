@@ -5,8 +5,8 @@ Definition of Element class
 '''
 
 # Import config module
-import config
-from config import FONTS_PATH
+import matrix_display.config
+from matrix_display.config import FONTS_PATH
 
 import logging
 log = logging.getLogger(__name__)
@@ -18,10 +18,10 @@ from pathlib import Path
 
 from rgbmatrix import FrameCanvas, graphics
 
-from Property import Property
-from Param import Parameter
-from elementhelpers import *
-from Components import *
+from matrix_display.Property import Property
+from matrix_display.Param import Parameter
+from matrix_display.elementhelpers import *
+from matrix_display.Components import *
 
 # Element dependencies
 # IconElement, Primitive elements
