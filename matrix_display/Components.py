@@ -28,7 +28,7 @@ from .elementhelpers import *
 # Primitive elements 
 import numpy as np
 # IconElement, Primitive elements
-from PIL import Image, ImageDraw, ImageSequence
+from PIL import Image, ImageDraw, ImageSequence, ImageColor
 # TextElement
 import webcolors
 from pathlib import Path
@@ -188,6 +188,26 @@ class PrimitiveComponent(Component):
         if self.stroke_color: 
             for pX, pY in self.stroke_pts: 
                 canvas.SetPixel(pX, pY, *self.stroke_color)
+
+    @classmethod
+    def python_str(cls, args_dict: dict): 
+        '''
+        Return a Python string that creates an instance of this class
+        based on the arguments provided in `args_dict`
+        ---
+        Returns: string tuple (import_lines, init_lines)
+        '''
+        import_lines = ''
+        init_lines = f'''
+PrimitiveComponent(
+    x_={args_dict['x']['value']},
+    y_={args_dict['y']['value']},
+    w={args_dict['width']['value']},
+    h={args_dict['height']['value']},
+)
+'''
+        return (import_lines, init_lines)
+        
 
 class Rect(PrimitiveComponent): 
     '''Draws a rectangle.'''
@@ -478,6 +498,26 @@ class Text(Component):
     def draw(self, canvas: FrameCanvas): 
         return graphics.DrawText(canvas, self.font, self.x, self.y, self.font_color, self.text)
 
+    @classmethod
+    def python_str(cls, args_dict: dict): 
+        '''
+        Return a Python string that creates an instance of this class
+        based on the arguments provided in `args_dict`
+        ---
+        Returns: string tuple (import_lines, init_lines)
+        '''
+        import_lines = ''
+        init_lines = f'''
+Text(
+    x_={args_dict['x']['value']},
+    y_={args_dict['y']['value']},
+    text_="{args_dict['text']['value']}",
+    font="{args_dict['font']['value']}",
+    color={ImageColor.getcolor(args_dict['color']['value'], "RGB")}
+)
+'''
+        return (import_lines, init_lines)
+
 class ScrollingText(Text):
     '''Draws text to the display'''
 
@@ -706,6 +746,26 @@ class RasterImage(Icon):
         else: 
             imgTransform.thumbnail(thumbnailSize)
         self.img = imgTransform.convert("RGB")
+
+    @classmethod
+    def python_str(cls, args_dict: dict): 
+        '''
+        Return a Python string that creates an instance of this class
+        based on the arguments provided in `args_dict`
+        ---
+        Returns: string tuple (import_lines, init_lines)
+        '''
+        import_lines = ''
+        init_lines = f'''
+RasterImage(
+    x_={args_dict['x']['value']},
+    y_={args_dict['y']['value']},
+    path="{args_dict['path']['value']}",
+    width={args_dict['width']['value']},
+    height={args_dict['height']['value']},
+)
+'''
+        return (import_lines, init_lines)
 
 class PILImage(Component): 
     '''Draw a PIL Image object to matrix'''
