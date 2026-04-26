@@ -21,7 +21,6 @@ Current version contains command-line interface for calling existing modules fro
 from cmd import Cmd
 import os, sys, threading
 
-# Add subfolders to sys.path
 from matrix_display import config
 
 # Logger
