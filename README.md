@@ -1,4 +1,4 @@
-# rpiDisplay
+# rpi-display
 An RGB matrix OS/driver for Raspberry Pi -- work in progress
 
 ## Setup

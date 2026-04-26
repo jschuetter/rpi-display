@@ -9,8 +9,8 @@ Jacob Schuetter
 
 # RGB self.matrix dependencies
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-import config 
-from config import FONTS_PATH, EXPORT_PATH
+import matrix_display.config 
+from matrix_display.config import FONTS_PATH, EXPORT_PATH
 
 import os
 from warnings import warn
@@ -18,7 +18,7 @@ import json
 from typing import Any
 from shutil import copy as fcopy
 
-from modules.src import Elements
+from matrix_display import Elements
 
 import logging
 log = logging.getLogger(__name__)

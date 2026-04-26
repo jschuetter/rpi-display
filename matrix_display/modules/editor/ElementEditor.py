@@ -1,8 +1,8 @@
 import cmd
-from modules.src import Elements
-from modules.src.Elements import Property
-import cli
-from cli import parse
+from matrix_display import Elements
+from matrix_display.Elements import Property
+import matrix_display.modules.editor.cli
+from matrix_display.modules.editor.cli import parse
 import sys, tty, termios
 from copy import deepcopy
 

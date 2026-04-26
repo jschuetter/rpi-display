@@ -22,10 +22,7 @@ from cmd import Cmd
 import os, sys, threading
 
 # Add subfolders to sys.path
-CODE_PATH = "./display-master"
-for root, dirs, files in os.walk(CODE_PATH): 
-    sys.path.append(root)
-import config
+from matrix_display import config
 
 # Logger
 import logging
@@ -59,12 +56,12 @@ log.addHandler(file_handler)
 log.addHandler(stdout_handler)
 
 # ThreadLoop helper class, to run modules behind main CLI
-from ThreadLoop import ThreadLoop
+from matrix_display.ThreadLoop import ThreadLoop
 
 # Import modules
-from clocks.basicclock import BasicClock
-from editor.base import Editor
-from testskeleton import TestModule
+from matrix_display.modules.clocks.basicclock import BasicClock
+from matrix_display.modules.editor.base import Editor
+from matrix_display.modules.testskeleton import TestModule
 # from fonttest import Fonttest
 MODULES_PATH = "./display-master/modules"
 MODULES = {

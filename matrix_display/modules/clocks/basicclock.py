@@ -12,11 +12,11 @@ v2.0: 12 Feb 2025
 '''
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from modules.Module import Module
-from src.Components import DateTimeDisplay
+from matrix_display.modules.Module import Module
+from matrix_display.Components import DateTimeDisplay
 from datetime import datetime as dt
 import time, pytz
-from config import FONTS_PATH
+from matrix_display.config import FONTS_PATH
 
 # Logging
 import logging
