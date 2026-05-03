@@ -198,8 +198,7 @@ class PrimitiveComponent(Component):
         Returns: string tuple (import_lines, init_lines)
         '''
         import_lines = ''
-        init_lines = f'''
-PrimitiveComponent(
+        init_lines = f'''PrimitiveComponent(
     x_={args_dict['x']['value']},
     y_={args_dict['y']['value']},
     w={args_dict['width']['value']},
@@ -294,7 +293,6 @@ class Ellipse(PrimitiveComponent):
         # Use ellipse equation to create grid masks
         strokeMask = ((gridX - ctrX) / axisA) ** 2 + ((gridY - ctrY) / axisB) **2 <= 1 + self.tolerance
         strokePts = np.argwhere(strokeMask)
-        # print(strokePts)
         strokePtsArray = np.array(list(strokePts))
         # Calculate fill mask based on stroke mask
         ptsX = strokePtsArray[:,0]
@@ -507,8 +505,7 @@ class Text(Component):
         Returns: string tuple (import_lines, init_lines)
         '''
         import_lines = ''
-        init_lines = f'''
-Text(
+        init_lines = f'''Text(
     x_={args_dict['x']['value']},
     y_={args_dict['y']['value']},
     text_="{args_dict['text']['value']}",
@@ -756,8 +753,7 @@ class RasterImage(Icon):
         Returns: string tuple (import_lines, init_lines)
         '''
         import_lines = ''
-        init_lines = f'''
-RasterImage(
+        init_lines = f'''RasterImage(
     x_={args_dict['x']['value']},
     y_={args_dict['y']['value']},
     path="{args_dict['path']['value']}",
