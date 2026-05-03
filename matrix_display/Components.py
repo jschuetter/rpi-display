@@ -742,7 +742,7 @@ class RasterImage(Icon):
         imgW, imgH = imgTransform.size
         thumbnailSize = (width or imgW, height or imgH)     # Use imgW, imgH if width, height are None (respectively)
         if antialias: 
-            imgTransform.thumbnail(thumbnailSize, Image.ANTIALIAS)
+            imgTransform.thumbnail(thumbnailSize, Image.LANCZOS)
         else: 
             imgTransform.thumbnail(thumbnailSize)
         self.img = imgTransform.convert("RGB")
