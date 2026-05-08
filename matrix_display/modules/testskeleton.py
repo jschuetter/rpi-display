@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 class TestModule(Module): 
 
     def __init__(self, matrix, canvas):
-        super().__init__(matrix, canvas, doLoop=True, delay=1/30)
+        super().__init__(matrix, canvas, doloop=True, delay=1/30)
         self.components = [
             # Add components here!
         ]

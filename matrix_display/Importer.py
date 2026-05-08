@@ -39,7 +39,7 @@ def from_json(comp_name: str, json_path: str, delay: float|Fraction|None = None)
 
     kwarg_str = ''
     if delay: 
-        kwarg_str += f", doLoop=True, delay={Fraction(delay)}"
+        kwarg_str += f", doloop=True, delay={Fraction(delay)}"
 
     
         

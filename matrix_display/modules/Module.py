@@ -13,7 +13,7 @@ DEFAULT_DELAY = 1/24
 class Module: 
     '''Template for other module definitions'''
 
-    def __init__(self, matrix, canvas, *, doLoop = False, delay = DEFAULT_DELAY): 
+    def __init__(self, matrix, canvas, *, doloop = False, delay = DEFAULT_DELAY): 
         '''
         Parameters
         -----------
@@ -27,7 +27,7 @@ class Module:
         '''
         self.matrix = matrix
         self.canvas = canvas
-        self.do_loop = doLoop
+        self.do_loop = doloop
         self.delay = delay
         self.components = []
 
