@@ -64,12 +64,14 @@ from matrix_display import Importer
 # Import modules
 from matrix_display.modules.clocks.basicclock import BasicClock
 from matrix_display.modules.editor.base import Editor
+from matrix_display.modules.weather.base import Weather
 from matrix_display.modules.testskeleton import TestModule
 # from fonttest import Fonttest
 MODULES_PATH = "./display-master/modules"
 MODULES = {
     "basicclock": BasicClock,
     "editor": Editor,
+    "weather": Weather,
     "testmodule": TestModule
 }
 
