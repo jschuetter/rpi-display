@@ -53,7 +53,7 @@ class Weather(Module):
             text_="Clear, 100% in 23h",
             font="basic/5x7.bdf",
             color=(255, 255, 255),
-            delay=10
+            delay=40
         )
         self.components = [
             self.icon,

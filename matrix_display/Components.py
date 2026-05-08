@@ -532,6 +532,7 @@ class ScrollingText(Text):
         speed: float = -1,
         mode: int = ONCE,
         delay: int = 0, 
+        init_delay: bool = True
         sep: str = ''
         ):
         '''
@@ -559,6 +560,8 @@ class ScrollingText(Text):
             No. of frame updates to wait between scrolling iterations
             ONCE & LOOP modes: scrolls around once, then pauses at original position
             BOUNCE mode: pauses at each end of text before changing direction
+        init_delay: bool
+            Whether to include delay on initial widget draw
         sep: str
             String to insert between iterations in LOOP mode
             Has no effect in ONCE or BOUNCE modes
@@ -579,6 +582,7 @@ class ScrollingText(Text):
             raise ValueError("Scrolling mode must be ScrollingText.ONCE, ScrollingText.LOOP, or ScrollingText.BOUNCE")
         self.mode = mode
         self.delay = delay
+        self.initial_delay = init_delay
         self.separator = sep
         self.scroll_index = 0
         self.delay_count = 0
@@ -592,7 +596,8 @@ class ScrollingText(Text):
         # Ignore rest of function if initial draw or scroll rate is 0
         if self.length is None or self.rate == 0: 
             self.length = super().draw(canvas)
-            self.scroll_index += 1
+            if not self.initial_delay: 
+                self.scroll_index += 1
             return self.length
         
         newPos = self.x + self.rate * self.scroll_index
