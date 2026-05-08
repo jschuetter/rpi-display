@@ -20,6 +20,7 @@ Current version contains command-line interface for calling existing modules fro
 
 from cmd import Cmd
 import os, sys, threading
+from fractions import Fraction
 
 from matrix_display import config
 
@@ -56,6 +57,9 @@ log.addHandler(stdout_handler)
 
 # ThreadLoop helper class, to run modules behind main CLI
 from matrix_display.ThreadLoop import ThreadLoop
+
+# JSON importer method
+from matrix_display import Importer
 
 # Import modules
 from matrix_display.modules.clocks.basicclock import BasicClock
@@ -154,6 +158,36 @@ class MyShell(Cmd):
             print(f"Cleared log file {config.LOG_FILE}")
         else: 
             print("Canceled.")
+
+    def do_import(self, arg): 
+        '''Import module from JSON'''
+        argv = arg.split()
+        if len(argv) < 2: 
+            print("Usage: import [module name] [JSON path] ([frame delay (s)])")
+            return
+        else: 
+            (class_name, json_path) = argv[:2]
+
+        # Process optional delay argument
+        if len(argv) >= 3: 
+            delay_arg = argv[2]
+            try: 
+                delay = float(delay_arg)
+            except ValueError as e: 
+                try: 
+                    delay = Fraction(delay_arg)
+                except ValueError as e: 
+                    log.error(e)
+                    print("Frame delay must be a numeric (float) value")
+                    return
+        else: 
+            delay = None
+        
+        try: 
+            Importer.from_json(class_name, json_path, delay)
+        except Exception as e: 
+            log.error(e)
+            return
     
     def do_quit(self, arg):
         '''Exit the shell.'''

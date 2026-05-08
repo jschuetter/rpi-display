@@ -813,7 +813,7 @@ class ImageElement(MatrixElement):
         # if not self.height: 
         #     w, h = img.size
         #     self.height = Property(math.ceil(self.width.value * (h/w)), int, "n")
-        img.thumbnail((self.size.value, self.size.value), Image.ANTIALIAS)
+        img.thumbnail((self.size.value, self.size.value), Image.LANCZOS)
         img = img.convert("RGB")
         canvas.SetImage(img, self.pos.value[0], self.pos.value[1])
 
@@ -824,7 +824,7 @@ class ImageElement(MatrixElement):
                 f"{INIT_TAB}#   Pos: {self.pos.value}\n"
                 f"{INIT_TAB}#   Size: {self.size.value}\n"
                 f"{INIT_TAB}img_{self.name.value} = Image.open('{self.path.value}')"
-                f".thumbnail(({self.size.value}, {self.size.value}), Image.ANTIALIAS)"
+                f".thumbnail(({self.size.value}, {self.size.value}), Image.LANCZOS)"
                 f".convert('RGB')\n")
                 # f"{INIT_TAB}img_{self.name.value} = img.convert('RGB')\n")
     
