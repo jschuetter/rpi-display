@@ -532,7 +532,7 @@ class ScrollingText(Text):
         speed: float = -1,
         mode: int = ONCE,
         delay: int = 0, 
-        init_delay: bool = True
+        init_delay: bool = True,
         sep: str = ''
         ):
         '''
