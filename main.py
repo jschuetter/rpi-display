@@ -55,6 +55,21 @@ stdout_handler.setFormatter(stdout_formatter)
 log.addHandler(file_handler)
 log.addHandler(stdout_handler)
 
+# GPIO
+import gpiozero
+
+btn1 = gpiozero.Button(8)
+btn1.when_pressed = lambda: print("btn1 pressed")
+btn2 = gpiozero.Button(7)
+btn2.when_pressed = lambda: print("btn2 pressed")
+
+rot_up = gpiozero.Button(10)
+rot_up.when_pressed = lambda: print("rotary up")
+rot_down = gpiozero.Button(9)
+rot_down.when_pressed = lambda: print("rotary down")
+rot_click = gpiozero.Button(25)
+rot_click.when_pressed = lambda: print("rotary click")
+
 # ThreadLoop helper class, to run modules behind main CLI
 from matrix_display.ThreadLoop import ThreadLoop
 
