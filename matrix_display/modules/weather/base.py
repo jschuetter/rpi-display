@@ -216,11 +216,6 @@ def get_next_precip(data_json):
                 # Calculate timedelta 
                 timediff = chance_time - current_time
 
-                print("Chance day:", chance_day)
-                print("current_time:", current_time)
-                print("chance time:", chance_time)
-                print("timediff:", timediff)
-                
                 if timediff.seconds < (3*3600):  # Within 3-hr window
                     return f"{chance_pct}% chance of {chance_type}"
                 elif timediff.days < 1:  # Within next day
