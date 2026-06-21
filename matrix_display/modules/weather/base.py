@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 import requests
 from datetime import datetime as dt
+from datetime import date, timedelta
 
 # Logging
 import logging
@@ -185,53 +186,47 @@ def get_next_precip(data_json):
         "XX% in 00h (rain/snow)"    (if future chance of rain)
         "dry for 3 days"                (if no chance of rain in forecast)
     '''
-    now = dt.now()
-    current_time_int = int(now.strftime('%H%M'))
+    current_time = dt.now()
 
     chance_pct = None
     chance_day = None
-    chance_time_int = None
+    chance_time = None
     chance_type = None
 
     for day_idx in range(3): 
         day = data_json['weather'][day_idx]
         for hour_idx in range(8): 
             hour = day['hourly'][hour_idx]
-            time_int = int(hour['time'])
+            chance_time = dt.combine(date.today(), dt.strptime(hour['time'].zfill(4), '%H%M').time())
 
-            if day_idx == 0 and time_int < current_time_int: 
+            if day_idx == 0 and chance_time < current_time: 
                 # Skip any hours that have already passed
                 continue
 
             if hour['chanceofrain'] != "0": 
                 chance_pct = int(hour['chanceofrain'])
                 chance_day = day_idx
-                chance_time_int = time_int
                 chance_type = 'rain'
             elif hour['chanceofsnow'] != "0":
                 chance_pct = int(hour['chanceofsnow'])
                 chance_day = day_idx
-                chance_time_int = time_int
                 chance_type = 'snow'
 
             if chance_pct is not None:
-                # Calculate timediff in next chance (in hours)
-                timediff = 0
-                if chance_day == 0: 
-                    timediff = chance_time_int - current_time_int // 100
-                else: 
-                    timediff = (
-                        (2400 - current_time_int) + # Time remaining in current day
-                        chance_time_int +           # Time in day with chance
-                        (2400 * (chance_day - 1))   # Additional days between now and chance
-                    ) // 100
+                # Calculate timedelta 
+                timediff = chance_time - current_time
+
+                print("Chance day:", chance_day)
+                print("current_time:", current_time)
+                print("chance time:", chance_time)
+                print("timediff:", timediff)
                 
-                if timediff < 3: 
+                if timediff.seconds < (3*3600):  # Within 3-hr window
                     return f"{chance_pct}% chance of {chance_type}"
-                elif timediff < 24: 
-                    return f"{chance_pct}% in {timediff}h ({chance_type})"
+                elif timediff.days < 1:  # Within next day
+                    return f"{chance_pct}% in {timediff.seconds//3600}h ({chance_type})"
                 else: 
-                    return f"{chance_pct}% in {timediff//24}d ({chance_type})"
+                    return f"{chance_pct}% in {timediff.days}d ({chance_type})"
             else: 
                 # No chance of rain found
                 return "dry for 3 days"
