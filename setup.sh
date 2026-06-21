@@ -1,6 +1,6 @@
 #!/bin/bash
 # Set up virtual environment
-python3 -m venv .venv
+python3 -m venv --system-site-packages .venv
 source .venv/bin/activate
 
 # Install rgbmatrix pkg 
