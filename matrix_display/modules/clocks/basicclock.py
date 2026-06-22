@@ -44,7 +44,7 @@ FONT_COLOR = (255,255,255)
 class BasicClock(Module): 
 
     def __init__(self, matrix, canvas):
-        super().__init__(matrix, canvas, doLoop=True, delay=1)
+        super().__init__(matrix, canvas, doloop=True, delay=1)
         self.components = [
             # Date display
             DateTimeDisplay(

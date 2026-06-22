@@ -6,5 +6,6 @@ av
 pytz
 numpy
 just_playback
+requests
 gpiozero
 lgpio
